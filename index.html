@@ -2,35 +2,153 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Elysian Store | Elegan & Modern</title>
-    <!-- Fonts & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elysian Admin | Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style-admin.css">
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
 </head>
 <body>
 
-<!-- SPLASH SCREEN dengan animasi smooth -->
-<div id="splash" class="splash-screen">
+<div id="splash" class="splash">
     <div class="splash-content">
-        <div class="splash-logo">Elysian</div>
-        <div class="splash-sub">TIMELESS ELEGANCE</div>
-        <div class="splash-spinner"></div>
+        <div class="splash-logo">Elysian Admin</div>
+        <div class="spinner"></div>
     </div>
 </div>
 
-<!-- Main App Container (akan tampil setelah splash) -->
-<div id="app" class="app-container hidden">
-    <div id="root"></div>
-</div>
+<div id="app" style="display: none;"></div>
 
-<!-- Firebase Config (isi dengan config-mu) -->
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
 <script src="firebase-config.js"></script>
-<script src="main.js"></script>
+<script>
+    const appDiv = document.getElementById('app');
+    let currentUser = null;
+
+    setTimeout(() => {
+        document.getElementById('splash').classList.add('hide');
+    }, 1000);
+
+    function renderLogin() {
+        appDiv.innerHTML = `
+            <div class="auth-card">
+                <div class="logo" style="font-size:2rem;">Elysian</div>
+                <p style="margin:0.5rem 0 1rem; color:#8b7356;">Admin Dashboard</p>
+                <input type="email" id="loginEmail" placeholder="Email">
+                <input type="password" id="loginPass" placeholder="Password">
+                <button id="loginBtn" class="btn-primary">Masuk</button>
+                <div id="authMsg" style="color:#c46b3f; margin-top:1rem;"></div>
+            </div>
+        `;
+        document.getElementById('loginBtn').onclick = async () => {
+            const email = document.getElementById('loginEmail').value;
+            const pass = document.getElementById('loginPass').value;
+            try {
+                await auth.signInWithEmailAndPassword(email, pass);
+            } catch (err) {
+                document.getElementById('authMsg').innerText = err.message;
+            }
+        };
+    }
+
+    async function isAdmin(user) {
+        const doc = await db.collection('users').doc(user.uid).get();
+        return doc.exists && doc.data().role === 'admin';
+    }
+
+    async function renderAdminPanel() {
+        appDiv.innerHTML = `
+            <div class="navbar">
+                <div class="logo">⚜️ Elysian Admin</div>
+                <div>
+                    <span class="admin-badge">Administrator</span>
+                    <button id="logoutBtn" class="btn-secondary">Keluar</button>
+                </div>
+            </div>
+            <div class="admin-panel">
+                <h3><i class="fas fa-plus-circle"></i> Tambah Produk</h3>
+                <div class="form-group"><input id="prodName" placeholder="Nama produk"></div>
+                <div class="form-group"><input id="prodPrice" type="number" placeholder="Harga (Rp)"></div>
+                <div class="form-group"><textarea id="prodDesc" rows="2" placeholder="Deskripsi"></textarea></div>
+                <button id="addBtn" class="btn-primary" style="width:auto;">+ Tambah</button>
+                <hr>
+                <h3><i class="fas fa-boxes"></i> Daftar Produk</h3>
+                <div id="productList"></div>
+            </div>
+        `;
+        document.getElementById('logoutBtn').onclick = () => auth.signOut();
+        document.getElementById('addBtn').onclick = tambahProduk;
+        loadProducts();
+    }
+
+    async function tambahProduk() {
+        const name = document.getElementById('prodName').value;
+        const price = parseInt(document.getElementById('prodPrice').value);
+        const description = document.getElementById('prodDesc').value;
+        if (!name || !price) return alert("Lengkapi data!");
+        await db.collection('products').add({
+            name, price, description,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        document.getElementById('prodName').value = '';
+        document.getElementById('prodPrice').value = '';
+        document.getElementById('prodDesc').value = '';
+        loadProducts();
+    }
+
+    async function loadProducts() {
+        const snapshot = await db.collection('products').orderBy('createdAt', 'desc').get();
+        const products = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        const container = document.getElementById('productList');
+        if (!container) return;
+        if (products.length === 0) {
+            container.innerHTML = '<p style="text-align:center; padding:2rem;">Belum ada produk</p>';
+            return;
+        }
+        container.innerHTML = products.map(p => `
+            <div class="product-item">
+                <div><strong>${escapeHtml(p.name)}</strong><br>Rp ${formatRupiah(p.price)}<br><small>${escapeHtml(p.description?.substring(0,50) || '')}</small></div>
+                <button class="delete-btn" data-id="${p.id}">Hapus</button>
+            </div>
+        `).join('');
+        document.querySelectorAll('.delete-btn').forEach(btn => {
+            btn.onclick = async () => {
+                if (confirm('Hapus produk?')) {
+                    await db.collection('products').doc(btn.dataset.id).delete();
+                    loadProducts();
+                }
+            };
+        });
+    }
+
+    function formatRupiah(angka) {
+        return new Intl.NumberFormat('id-ID').format(angka || 0);
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            return m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;';
+        });
+    }
+
+    auth.onAuthStateChanged(async (user) => {
+        currentUser = user;
+        if (!user) {
+            renderLogin();
+        } else {
+            const admin = await isAdmin(user);
+            if (admin) {
+                renderAdminPanel();
+            } else {
+                appDiv.innerHTML = `<div class="auth-card"><h3>Akses Ditolak</h3><button id="logoutBtn2" class="btn-primary">Logout</button></div>`;
+                document.getElementById('logoutBtn2').onclick = () => auth.signOut();
+            }
+        }
+        appDiv.style.display = 'block';
+    });
+</script>
 </body>
 </html>
