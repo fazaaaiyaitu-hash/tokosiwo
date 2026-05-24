@@ -6,8 +6,8 @@
 
 body {
     font-family: 'Inter', sans-serif;
-    background: #f5f2ef;
-    color: #1e1e2a;
+    background: #0f0f13;
+    color: #e8e8ed;
 }
 
 /* Splash Screen */
@@ -17,7 +17,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, #fff9f2, #f0ebe3);
+    background: linear-gradient(135deg, #0a0a0e, #12121a);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -38,7 +38,7 @@ body {
 .splash-logo {
     font-size: 3rem;
     font-family: 'Playfair Display', serif;
-    background: linear-gradient(130deg, #c7a17a, #8b5e3c);
+    background: linear-gradient(130deg, #d4a373, #b5835a);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -47,8 +47,8 @@ body {
 .spinner {
     width: 40px;
     height: 40px;
-    border: 2px solid #e2cfb6;
-    border-top: 2px solid #b47c48;
+    border: 2px solid #2a2a35;
+    border-top: 2px solid #d4a373;
     border-radius: 50%;
     animation: spin 0.8s linear infinite;
     margin-top: 1rem;
@@ -63,19 +63,19 @@ body {
 
 /* Navbar Admin */
 .navbar {
-    background: white;
+    background: #1a1a24;
     padding: 1rem 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #e8dfd7;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+    border-bottom: 1px solid #2a2a35;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
 
 .logo {
     font-size: 1.4rem;
     font-weight: 600;
-    color: #8b5e3c;
+    color: #d4a373;
     font-family: 'Playfair Display', serif;
 }
 
@@ -83,11 +83,12 @@ body {
 .auth-card {
     max-width: 400px;
     margin: 5rem auto;
-    background: white;
+    background: #1a1a24;
     padding: 2rem;
     border-radius: 32px;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.05);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
     text-align: center;
+    border: 1px solid #2a2a35;
 }
 
 .auth-card input {
@@ -95,17 +96,24 @@ body {
     padding: 0.8rem;
     margin: 0.5rem 0;
     border-radius: 40px;
-    border: 1px solid #e2d4c8;
+    border: 1px solid #2a2a35;
     font-family: inherit;
+    background: #12121a;
+    color: #e8e8ed;
+}
+
+.auth-card input:focus {
+    outline: none;
+    border-color: #d4a373;
 }
 
 .btn-primary {
-    background: #1e1e2a;
-    color: white;
+    background: #d4a373;
+    color: #0f0f13;
     border: none;
     padding: 0.7rem 1.5rem;
     border-radius: 40px;
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
     width: 100%;
     margin-top: 0.5rem;
@@ -113,16 +121,22 @@ body {
 }
 
 .btn-primary:hover {
-    background: #b47c48;
+    background: #e8c4a0;
 }
 
 .btn-secondary {
     background: transparent;
-    border: 1px solid #dcc9b5;
-    color: #5c3e24;
+    border: 1px solid #d4a373;
+    color: #d4a373;
     padding: 0.4rem 1rem;
     border-radius: 40px;
     cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-secondary:hover {
+    background: #d4a373;
+    color: #0f0f13;
 }
 
 /* Admin Panel */
@@ -130,9 +144,10 @@ body {
     max-width: 1000px;
     margin: 2rem auto;
     padding: 1.8rem;
-    background: white;
+    background: #1a1a24;
     border-radius: 32px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    border: 1px solid #2a2a35;
 }
 
 .form-group {
@@ -143,13 +158,19 @@ body {
     width: 100%;
     padding: 0.8rem;
     border-radius: 20px;
-    border: 1px solid #e2d4c8;
+    border: 1px solid #2a2a35;
     font-family: inherit;
-    background: #fefcf9;
+    background: #12121a;
+    color: #e8e8ed;
+}
+
+.form-group input:focus, .form-group textarea:focus {
+    outline: none;
+    border-color: #d4a373;
 }
 
 .product-item {
-    background: #f9f6f2;
+    background: #12121a;
     padding: 1rem;
     border-radius: 20px;
     display: flex;
@@ -157,39 +178,45 @@ body {
     align-items: center;
     margin-bottom: 0.8rem;
     transition: 0.2s;
+    border: 1px solid #2a2a35;
 }
 
 .product-item:hover {
-    background: #f3ede7;
+    background: #1e1e2a;
+    border-color: #d4a373;
 }
 
 .delete-btn {
-    background: #d9c2aa;
+    background: #2a2a35;
     border: none;
     padding: 0.4rem 1.2rem;
     border-radius: 40px;
     cursor: pointer;
     font-size: 0.8rem;
+    color: #d4a373;
+    transition: 0.2s;
 }
 
 .delete-btn:hover {
-    background: #c7a882;
+    background: #d4a373;
+    color: #0f0f13;
 }
 
 hr {
     margin: 2rem 0;
-    border-color: #efe5dc;
+    border-color: #2a2a35;
 }
 
 h3 {
     margin-bottom: 1rem;
     font-weight: 500;
+    color: #d4a373;
 }
 
 .admin-badge {
-    background: #f0e4d8;
+    background: #2a2a35;
     padding: 0.2rem 0.8rem;
     border-radius: 40px;
     font-size: 0.7rem;
-    color: #8b5e3c;
+    color: #d4a373;
 }
