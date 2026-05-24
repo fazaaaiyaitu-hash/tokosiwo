@@ -40,10 +40,10 @@ function renderCartModal() {
             <div class="cart-item">
                 <div><strong>${escapeHtml(item.name)}</strong><br>Rp ${formatRupiah(item.price)}</div>
                 <div>
-                    <button class="qty-btn" data-idx="${idx}" data-delta="-1" style="background:#eee; border:none; width:28px; border-radius:20px;">-</button>
+                    <button class="qty-btn" data-idx="${idx}" data-delta="-1">-</button>
                     <span style="margin:0 10px;">${item.qty}</span>
-                    <button class="qty-btn" data-idx="${idx}" data-delta="1" style="background:#eee; border:none; width:28px; border-radius:20px;">+</button>
-                    <button class="remove-item" data-idx="${idx}" style="background:none; border:none; color:#b47c48;"><i class="fas fa-trash-alt"></i></button>
+                    <button class="qty-btn" data-idx="${idx}" data-delta="1">+</button>
+                    <button class="remove-item" data-idx="${idx}"><i class="fas fa-trash-alt"></i></button>
                 </div>
             </div>
         `;
@@ -86,17 +86,17 @@ function renderProducts() {
     const container = document.getElementById('productList');
     if (!container) return;
     if (products.length === 0) {
-        container.innerHTML = '<div style="text-align:center; padding:3rem;">✨ Belum ada produk, cek lagi nanti ✨</div>';
+        container.innerHTML = '<div style="text-align:center; padding:3rem; color:#6a6a7e;">✨ Belum ada produk, cek lagi nanti ✨</div>';
         return;
     }
 
     container.innerHTML = products.map(p => `
         <div class="product-card">
-            <div class="product-img"><i class="fas fa-gem"></i></div>
+            <div class="product-img"><i class="fas fa-box"></i></div>
             <div class="product-info">
                 <div class="product-title">${escapeHtml(p.name)}</div>
                 <div class="product-price">Rp ${formatRupiah(p.price)}</div>
-                <p style="font-size:0.8rem; color:#846b53;">${escapeHtml(p.description?.substring(0, 70) || '')}</p>
+                <div class="product-description">${escapeHtml(p.description?.substring(0, 70) || '')}</div>
                 <button class="btn-buy" data-id="${p.id}" data-name="${escapeHtml(p.name)}" data-price="${p.price}"><i class="fas fa-cart-plus"></i> Tambah ke Keranjang</button>
             </div>
         </div>
