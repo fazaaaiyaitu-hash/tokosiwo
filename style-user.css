@@ -6,8 +6,8 @@
 
 body {
     font-family: 'Inter', sans-serif;
-    background: #faf8f5;
-    color: #1e1e2a;
+    background: #0f0f13;
+    color: #e8e8ed;
 }
 
 /* Splash Screen */
@@ -17,7 +17,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, #fff9f2, #f0ebe3);
+    background: linear-gradient(135deg, #0a0a0e, #12121a);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -38,7 +38,7 @@ body {
 .splash-logo {
     font-size: 3.5rem;
     font-family: 'Playfair Display', serif;
-    background: linear-gradient(130deg, #c7a17a, #8b5e3c);
+    background: linear-gradient(130deg, #d4a373, #b5835a);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -47,8 +47,8 @@ body {
 .splash-spinner {
     width: 40px;
     height: 40px;
-    border: 2px solid #e2cfb6;
-    border-top: 2px solid #b47c48;
+    border: 2px solid #2a2a35;
+    border-top: 2px solid #d4a373;
     border-radius: 50%;
     animation: spin 0.8s linear infinite;
     margin-top: 1rem;
@@ -57,13 +57,13 @@ body {
 @keyframes spin { to { transform: rotate(360deg); } }
 @keyframes floatUp {
     0% { transform: translateY(0); opacity: 0.8; }
-    50% { transform: translateY(-10px); opacity: 1; }
+    50% { transform: translateY(-8px); opacity: 1; }
     100% { transform: translateY(0); opacity: 0.8; }
 }
 
 /* Navbar User */
 .navbar {
-    background: rgba(255, 253, 250, 0.95);
+    background: rgba(18, 18, 26, 0.95);
     backdrop-filter: blur(12px);
     padding: 1rem 2rem;
     display: flex;
@@ -72,14 +72,14 @@ body {
     position: sticky;
     top: 0;
     z-index: 100;
-    border-bottom: 1px solid rgba(0,0,0,0.05);
+    border-bottom: 1px solid #2a2a35;
 }
 
 .logo {
     font-family: 'Playfair Display', serif;
     font-size: 1.6rem;
     font-weight: 600;
-    background: linear-gradient(135deg, #aa7c52, #6b4c2c);
+    background: linear-gradient(135deg, #d4a373, #b5835a);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -89,36 +89,42 @@ body {
     position: relative;
     cursor: pointer;
     font-size: 1.3rem;
-    color: #5c3e24;
+    color: #d4a373;
+}
+
+.cart-icon:hover {
+    color: #e8c4a0;
 }
 
 .cart-count {
     position: absolute;
     top: -8px;
     right: -12px;
-    background: #b47c48;
-    color: white;
+    background: #d4a373;
+    color: #0f0f13;
     font-size: 0.7rem;
     padding: 2px 6px;
     border-radius: 20px;
+    font-weight: bold;
 }
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(120deg, #f3ede7, #faf6f0);
+    background: linear-gradient(135deg, #12121a, #0a0a0e);
     padding: 3rem 2rem;
     text-align: center;
+    border-bottom: 1px solid #2a2a35;
 }
 
 .hero h1 {
     font-family: 'Playfair Display', serif;
     font-size: 2.5rem;
     font-weight: 500;
-    color: #3b2a1f;
+    color: #d4a373;
 }
 
 .hero p {
-    color: #8b7356;
+    color: #8a8a9a;
     margin-top: 0.5rem;
 }
 
@@ -133,30 +139,30 @@ body {
 }
 
 .product-card {
-    background: white;
+    background: #1a1a24;
     border-radius: 24px;
     overflow: hidden;
     transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
-    box-shadow: 0 5px 20px rgba(0,0,0,0.03);
-    border: 1px solid #efe5dc;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    border: 1px solid #2a2a35;
     cursor: pointer;
 }
 
 .product-card:hover {
     transform: translateY(-6px);
-    box-shadow: 0 20px 35px -12px rgba(0,0,0,0.1);
-    border-color: #decbb8;
+    box-shadow: 0 20px 35px -12px rgba(0,0,0,0.5);
+    border-color: #d4a373;
 }
 
 .product-img {
     width: 100%;
     height: 220px;
-    background: #f3ede7;
+    background: #12121a;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 3rem;
-    color: #b68b65;
+    color: #d4a373;
 }
 
 .product-info {
@@ -167,28 +173,36 @@ body {
     font-weight: 600;
     font-size: 1.1rem;
     margin-bottom: 0.3rem;
+    color: #e8e8ed;
 }
 
 .product-price {
-    color: #b47c48;
+    color: #d4a373;
     font-weight: 700;
     margin: 0.5rem 0;
 }
 
+.product-description {
+    font-size: 0.8rem;
+    color: #8a8a9a;
+    margin-bottom: 0.8rem;
+}
+
 .btn-buy {
-    background: #1e1e2a;
-    color: white;
+    background: #d4a373;
+    color: #0f0f13;
     border: none;
     padding: 0.6rem;
     border-radius: 40px;
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
     width: 100%;
     transition: 0.2s;
 }
 
 .btn-buy:hover {
-    background: #b47c48;
+    background: #e8c4a0;
+    transform: scale(0.98);
 }
 
 /* Cart Modal */
@@ -199,7 +213,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.4);
+    background: rgba(0,0,0,0.7);
     backdrop-filter: blur(4px);
     z-index: 1000;
     justify-content: center;
@@ -212,20 +226,26 @@ body {
 }
 
 .modal-content {
-    background: white;
+    background: #1a1a24;
     border-radius: 32px;
     width: 90%;
     max-width: 450px;
     padding: 1.5rem;
     max-height: 70vh;
     overflow-y: auto;
+    border: 1px solid #2a2a35;
+    color: #e8e8ed;
+}
+
+.modal-content h3 {
+    color: #d4a373;
 }
 
 .cart-item {
     display: flex;
     justify-content: space-between;
     padding: 0.8rem 0;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #2a2a35;
 }
 
 @keyframes fadeIn {
@@ -236,16 +256,16 @@ body {
 footer {
     text-align: center;
     padding: 2rem;
-    color: #9b8a78;
+    color: #5a5a6e;
     font-size: 0.8rem;
-    border-top: 1px solid #efe5dc;
+    border-top: 1px solid #2a2a35;
     margin-top: 2rem;
 }
 
 .empty-cart {
     text-align: center;
     padding: 2rem;
-    color: #bdb09f;
+    color: #6a6a7e;
 }
 
 .toast-msg {
@@ -253,8 +273,8 @@ footer {
     bottom: 2rem;
     left: 50%;
     transform: translateX(-50%);
-    background: #1e1e2a;
-    color: white;
+    background: #2a2a35;
+    color: #d4a373;
     padding: 0.6rem 1.5rem;
     border-radius: 40px;
     font-size: 0.85rem;
@@ -262,4 +282,31 @@ footer {
     opacity: 0;
     transition: 0.2s;
     pointer-events: none;
+    border: 1px solid #d4a373;
+}
+
+/* Quantity buttons */
+.qty-btn {
+    background: #2a2a35;
+    color: #d4a373;
+    border: none;
+    width: 28px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.qty-btn:hover {
+    background: #d4a373;
+    color: #0f0f13;
+}
+
+.remove-item {
+    background: none;
+    border: none;
+    color: #d4a373;
+    cursor: pointer;
+}
+
+.remove-item:hover {
+    color: #e8c4a0;
 }
